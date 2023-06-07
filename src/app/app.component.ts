@@ -16,7 +16,7 @@ export const dockSideNavWidth = 992;
   host: {'class': 'page-home'}
 })
 export class AppComponent implements OnInit {
-  title = 'moses-group-ng';
+  title = 'moses-group';
 
   versionInfo: VersionInfo = {major: 0, full: "0.0.1"}
   pageId = 0
