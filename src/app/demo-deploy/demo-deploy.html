@@ -1,0 +1,98 @@
+<div class="doc-navbar"></div>
+
+<section class="sidenav-content">
+  <h1 class="no-toc">Live demo</h1>
+
+  <form ngForm>
+    <p>
+      <mat-form-field appearance="outline">
+        <mat-label>IP address or DNS name</mat-label>
+        <input matInput placeholder="IP address or DNS name">
+
+        <mat-icon matSuffix>settings_ethernet</mat-icon>
+        <mat-hint>Use a server you've deployed, as we lack a cloud sponsor</mat-hint>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="fill">
+        <mat-label>Prompt for MOSES-group</mat-label>
+        <textarea matInput></textarea>
+        <button mat-icon-button matSuffix (click)="promptForAudio()">
+          <mat-icon matSuffix>mic</mat-icon>
+        </button>
+      </mat-form-field>
+    </p>
+    <button mat-raised-button color="accent" style="width: 100%">Generate MOSES-group</button>
+    <p>MOSES-group works best with multiple iterations (e.g., take a question generated here, feed it as input)</p>
+    <hr>
+
+  </form>
+
+  <h1 class="no-toc">Deploy your own model</h1>
+
+  <p>To run the models need to deploy on <a
+    href="https://cloud.google.com/compute/docs/gpus"><code>a2-highgpu-8g</code></a> (currently). This is
+    ~$31.44/hour.</p>
+  <h2 id="dependenciesfordeploy">Dependencies for deploy</h2>
+  <ul>
+    <li><a href="https://python.org">Python</a> (2.7 is supported, but 3.7+ is the recommendation)</li>
+    <li><a href="https://github.com/offscale/offstrategy">offstrategy</a>, <a
+      href="https://github.com/offscale/offregister">offregister</a>, <a
+      href="https://github.com/offscale/offregister-llms">offregister-llms</a></li>
+    <li><a href="https://etcd.io">etcd</a> (v2 or v3)</li>
+    <li>Billing account and auth configured for your cloud provider with a cloud provider with sufficient
+      specifications (tested on <a href="https://cloud.google.com">Google Cloud</a> only thus far)
+    </li>
+  </ul>
+  <h2 id="deploytheserver">Deploy the server</h2>
+  <p>
+    The following uses a series of Python packages to run commands&mdash;over SSH&mdash;to setup remote compute with dependencies to:
+  </p>
+  <ul>
+    <li>build large-language models</li>
+    <li>host related backend (that can be called from a frontend, e.g., the form above)</li>
+  </ul>
+  <h3 id="offstrategyhttpsgithubcomoffscaleoffstrategy"><a href="https://github.com/offscale/offstrategy"><code>offstrategy</code></a>
+  </h3>
+  <pre><code class="sh language-sh"># JSON file describing Node to create and auth you can base off
+# github.com/offscale/offstrategy/blob/master/offstrategy/config/strategy.ubuntu.aws.json
+$ python -m offstrategy -n 9 --provider 'GCP' -c 'strategy.llm.gcp.json'
+# `python -m offswitch -s 'strategy.llm.gcp.json'` will delete the VMs
+</code></pre>
+
+  <h2 id="installllmdependenciesusingthispythonpackageslogic">Install LLM dependencies using this python package's
+    logic:</h2>
+  <pre><code class="sh language-sh"># You'll need `etcd` running in background for this command:
+$ python -m offregister -c 'register.llm.json'
+# register.llm.json is a default offregister config; see below
+</code></pre>
+  <h3 id="registerllmjsonexample"><code>register.llm.json</code> example</h3>
+  <p>Make sure you set <code>OFFAUTH_JSON</code> environment variable to your
+    https://github.com/offscale/offregister/blob/master/offregister/_config/auth.sample.json</p>
+  <pre><code class="json language-json">&lbrace;
+  "name": "llm",
+  "description": "Offregister strategy for Large Language Models",
+  "version": "0.0.1",
+  "provider": &lbrace;
+    "$ref": "env:OFFAUTH_JSON|offutils.str_from_file | json.loads"
+  },
+  "register": &lbrace;
+    "/unclustered/rocky": [
+      &lbrace;
+        "module": "offregister-bootstrap",
+        "type": "fabric"
+      },
+      &lbrace;
+        "module": "offregister-llms",
+        "type": "fabric"
+      }
+    ]
+  },
+  "purpose": [
+    "llm"
+  ],
+  "etcd_server": "http://localhost:2379",
+  "default_pick": "first"
+}
+</code></pre>
+</section>

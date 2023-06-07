@@ -1,0 +1,46 @@
+<div id="top-of-page"></div>
+
+<a class="skip-to-content-link" href="#main-content">Skip to main content</a>
+
+<header [ngStyle]="{'background-color': isHome? 'blue': 'red'}">
+  <mat-toolbar #appToolbar class="app-toolbar no-print mat-toolbar mat-primary" color="primary"
+               [class.transitioning]="false">
+    <mat-toolbar-row class="mat-toolbar-row">
+      <button mat-button class="hamburger" title="Docs menu" (click)="sidenav.toggle()">
+        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="menu" class="hamburger-menu-icon"></mat-icon>
+      </button>
+      <a class="nav-link home" routerLink="/" [ngSwitch]="showTopMenu">
+        <img *ngSwitchCase="true" src="assets/images/logos/open/logo.png"
+             width="150" height="40" title="Home" alt="Home">
+        <img *ngSwitchDefault src="assets/images/logos/open/favicon.svg"
+             width="37" height="40" title="Home" alt="Home">
+      </a>
+      <aio-top-menu *ngIf="showTopMenu" [isWide]="false"></aio-top-menu>
+      <aio-theme-toggle class="right-align" #themeToggle></aio-theme-toggle>
+      <div #externalIcons class="toolbar-external-icons-container">
+        <a mat-icon-button href="https://github.com/moses-group"
+           title="GitHub" aria-label="moses-group on GitHub">
+          <mat-icon svgIcon="logos:github"></mat-icon>
+        </a>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</header>
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav [class.collapsed]="!dockSideNav" #sidenav class="sidenav"
+               [mode]="mode" [opened]="isOpened" (openedChange)="updateHostClasses()">
+    <aio-top-menu [isWide]="true" [parent]="this.sidenav"></aio-top-menu>
+  </mat-sidenav>
+
+  <section class="sidenav-content-container">
+    <main class="sidenav-content" [id]="pageId">
+      <div id="main-content" tabindex="-1"></div>
+      <router-outlet></router-outlet>
+    </main>
+  </section>
+
+  <footer class="no-print">
+    <aio-footer [versionInfo]="versionInfo"></aio-footer>
+  </footer>
+</mat-sidenav-container>
