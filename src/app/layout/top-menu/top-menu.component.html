@@ -1,11 +1,13 @@
 <nav aria-label="primary">
   <ul>
-    <li routerLinkActive="selected" (click)="goAndCloseParent('/doc/demo-deploy')">
+    <li routerLinkActive="selected" (click)="goAndCloseParent('/demo')"
+        routerLink="/demo">
       <a class="nav-link" title="demo">
-      <span class="nav-link-inner">Chatbot demo</span>
+        <span class="nav-link-inner">Chatbot demo</span>
       </a>
     </li>
-    <li routerLinkActive="selected" (click)="goAndCloseParent('/doc/more')">
+    <li routerLinkActive="selected" (click)="goAndCloseParent('/doc/more')"
+        routerLink="/doc/more">
       <a class="nav-link" title="more">
         <span class="nav-link-inner">learn more</span>
       </a>

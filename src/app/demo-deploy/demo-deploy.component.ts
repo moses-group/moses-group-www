@@ -1,6 +1,14 @@
-import {AfterViewInit, Component, OnDestroy} from '@angular/core';
+import {AfterViewInit, Component, NgZone, OnDestroy, ViewChild} from '@angular/core';
+import {take} from "rxjs";
+import {CdkTextareaAutosize} from "@angular/cdk/text-field";
+import {FormControl, FormGroup} from "@angular/forms";
 
 import { ChatInterface, ChatModule, ChatWorkerClient, ModelRecord } from "@mlc-ai/web-llm";
+
+interface AppConfig {
+  model_list: Array<ModelRecord>;
+  model_lib_map?: Record<string, string>;
+}
 
 function getElementAndCheck(id: string): HTMLElement {
   const element = document.getElementById(id);
@@ -8,11 +16,6 @@ function getElementAndCheck(id: string): HTMLElement {
     throw Error("Cannot find element " + id);
   }
   return element;
-}
-
-interface AppConfig {
-  model_list: Array<ModelRecord>;
-  model_lib_map?: Record<string, string>;
 }
 
 class ChatUI {
@@ -234,12 +237,13 @@ class ChatUI {
 
 @Component({
   selector: 'app-demo-deploy',
-  templateUrl: './demo-deploy.html',
+  templateUrl: './demo-deploy.component.html',
   styleUrls: [
-    '../doc/doc.scss'
+    '../doc/doc.scss',
+    "./demo-deploy.component.scss"
   ]
 })
-export class DemoDeploy implements AfterViewInit, OnDestroy {
+export class DemoDeployComponent implements AfterViewInit, OnDestroy {
   private mediaRecorder: MediaRecorder | undefined;
   promptForAudio() {
     navigator.mediaDevices.getUserMedia({ audio: true })
@@ -264,7 +268,34 @@ export class DemoDeploy implements AfterViewInit, OnDestroy {
     new ChatUI(chat);*/
   }
 
+  constructor(private _ngZone: NgZone) {}
+
+  @ViewChild('autosize') autosize: CdkTextareaAutosize | undefined;
+
+  localChatForm = new FormGroup({
+    chatInput: new FormControl(''),
+  });
+
+  localChatSubmit() {
+    console.info(
+      "chatInput:", this.localChatForm.value.chatInput ?? '', ';'
+    );
+  }
+
+  triggerResize() {
+    // Wait for changes to be applied, then trigger textarea resize.
+    this._ngZone.onStable.pipe(take(1)).subscribe(() => this.autosize?.resizeToFitContent(true));
+  }
+
   ngOnDestroy() {
     this.mediaRecorder?.stop();
+  }
+
+  localChatFormReset() {
+    this.localChatForm.reset();
+    Object.keys(this.localChatForm.controls).forEach(key =>
+      this.localChatForm.get(key)?.setErrors(null)
+    );
+    this.localChatForm.clearValidators();
   }
 }

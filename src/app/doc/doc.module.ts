@@ -10,12 +10,11 @@ import { MatInputModule } from "@angular/material/input";
 import { MatIconModule } from "@angular/material/icon";
 
 import { LearnMoreComponent } from "../learn-more/learn-more.component";
-import { DemoDeploy } from '../demo-deploy/demo-deploy';
 import { docRoutes } from "./doc.routes";
 
 @NgModule({
   declarations: [
-    DemoDeploy, LearnMoreComponent
+    LearnMoreComponent
   ],
   imports: [
     CommonModule, RouterModule, RouterModule.forChild(docRoutes),
