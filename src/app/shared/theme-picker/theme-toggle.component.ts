@@ -1,6 +1,5 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject } from '@angular/core';
-
 import { LocalStorage } from '../storage.service';
 
 export const storageKey = 'aio-theme';
