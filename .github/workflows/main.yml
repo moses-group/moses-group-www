@@ -24,8 +24,6 @@ jobs:
           npm i -g @angular/cli typescript angular-cli-ghpages
           ng add --skip-confirmation angular-cli-ghpages
           npm ci
-          ng build --configuration production
-          cp README.md dist/moses-group
           MSG="$(git show -s --format='%s' "$GITHUB_SHA")"
           email_author="$(git log -1 --pretty=format:'%an <%ce>')"
           author="${email_author% *}"

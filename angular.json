@@ -85,10 +85,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "moses-group:build:production"
+              "buildTarget": "moses-group:build:production"
             },
             "development": {
-              "browserTarget": "moses-group:build:development"
+              "buildTarget": "moses-group:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -96,7 +96,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "moses-group:build"
+            "buildTarget": "moses-group:build"
           }
         },
         "test": {

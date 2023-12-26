@@ -102,25 +102,25 @@ $ python -m offregister -c 'register.llm.json'
   "version": "0.0.1",
   "provider": &lbrace;
     "$ref": "env:OFFAUTH_JSON|offutils.str_from_file | json.loads"
-  },
+  &#125;,
   "register": &lbrace;
     "/unclustered/rocky": [
       &lbrace;
         "module": "offregister-bootstrap",
         "type": "fabric"
-      },
+      &#125;,
       &lbrace;
         "module": "offregister-llms",
         "type": "fabric"
-      }
+      &#125;
     ]
-  },
+  &#125;,
   "purpose": [
     "llm"
   ],
   "etcd_server": "http://localhost:2379",
   "default_pick": "first"
-}
+&#125;
 </code></pre>
     </mat-tab>
   </mat-tab-group>
