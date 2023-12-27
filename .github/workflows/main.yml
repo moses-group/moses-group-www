@@ -32,4 +32,5 @@ jobs:
           git config --global user.email "$email"
           # cname='MOSES-group.com'
           ng build --configuration production # --base-href 'https://'"$cname"
+          head -n3 README.md > 'dist/moses-group/README.md'
           npx angular-cli-ghpages --dir='dist/moses-group' --repo='https://'"$GITHUB_TOKEN"'@github.com/moses-group/moses-group.github.io' --branch='master' --message="$MSG" --name="$name" --email="$email" --no-silent # --cname="$cname"
