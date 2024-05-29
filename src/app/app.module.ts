@@ -1,7 +1,7 @@
 import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from "@angular/common/http";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { LocationStrategy, PathLocationStrategy } from "@angular/common";
 
 import { MatToolbarModule } from "@angular/material/toolbar";
@@ -116,46 +116,38 @@ export const svgIconProviders = [
 ];
 /* eslint-enable max-len */
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    FooterComponent,
-    TopMenuComponent,
-    ThemeToggleComponent,
-  ],
-  imports: [
-    BrowserAnimationsModule,
-    BrowserModule,
-    HttpClientModule,
-
-    MatButtonModule,
-    MatDialogModule,
-    MatIconModule,
-    MatProgressBarModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    MatToolbarModule,
-
-    AppRoutingModule,
-    SlidesModule
-  ],
-  providers: [
-    // Deployment,
-    ErrorHandler,
-    //    { provide: ErrorHandler, useClass: ReportingErrorHandler },
-    Logger,
-    Location,
-    { provide: LocationStrategy, useClass: PathLocationStrategy },
-    { provide: MatIconRegistry, useClass: CustomIconRegistry },
-    ScrollService,
-    ScrollSpyService,
-    // SearchService,
-    STORAGE_PROVIDERS,
-    svgIconProviders,
-    // TocService,
-    // { provide: CurrentDateToken, useFactory: currentDateProvider },
-    { provide: WindowToken, useFactory: windowProvider },
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        FooterComponent,
+        TopMenuComponent,
+        ThemeToggleComponent,
+    ],
+    bootstrap: [AppComponent], imports: [BrowserAnimationsModule,
+        BrowserModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatIconModule,
+        MatProgressBarModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        MatToolbarModule,
+        AppRoutingModule,
+        SlidesModule], providers: [
+        // Deployment,
+        ErrorHandler,
+        //    { provide: ErrorHandler, useClass: ReportingErrorHandler },
+        Logger,
+        Location,
+        { provide: LocationStrategy, useClass: PathLocationStrategy },
+        { provide: MatIconRegistry, useClass: CustomIconRegistry },
+        ScrollService,
+        ScrollSpyService,
+        // SearchService,
+        STORAGE_PROVIDERS,
+        svgIconProviders,
+        // TocService,
+        // { provide: CurrentDateToken, useFactory: currentDateProvider },
+        { provide: WindowToken, useFactory: windowProvider },
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class AppModule { }

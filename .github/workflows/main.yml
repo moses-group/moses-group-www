@@ -1,6 +1,9 @@
 name: GitHub Pages
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   build-and-deploy:
@@ -19,6 +22,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
           GH_TOKEN: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+          DIST: 'dist/moses-group'
+          TARGET: 'moses-group/moses-group.github.io'
         run: |
           npm i -g npm
           npm i -g @angular/cli typescript angular-cli-ghpages
@@ -30,7 +35,8 @@ jobs:
           git config --global user.name "$author"
           email="${email_author#*<}"; email="${email::-1}"
           git config --global user.email "$email"
-          # cname='MOSES-group.com'
-          ng build --configuration production # --base-href 'https://'"$cname"
-          head -n3 README.md > 'dist/moses-group/README.md'
-          npx angular-cli-ghpages --dir='dist/moses-group' --repo='https://'"$GITHUB_TOKEN"'@github.com/moses-group/moses-group.github.io' --branch='master' --message="$MSG" --name="$name" --email="$email" --no-silent # --cname="$cname"
+          ng build --configuration production # --base-href 'https://'"$CNAME"
+          head -n3 README.md > "$DIST"'/README.md'
+          mv "$DIST"'/browser'/* "$DIST"
+          npx angular-cli-ghpages --dir="$DIST" --repo='https://'"$GITHUB_TOKEN"'@github.com/'"$TARGET" --branch='master' --message="$MSG" --name="$name" --email="$email" --no-silent  # --cname="$CNAME"
+
