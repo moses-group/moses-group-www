@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 
 import { VersionInfo } from "../../shared-types";
 
+
 @Component({
   selector: 'aio-footer',
   templateUrl: 'footer.component.html',

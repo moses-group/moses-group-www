@@ -1,9 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { MatDialog } from "@angular/material/dialog";
-import { MatSidenav } from "@angular/material/sidenav";
 import { Router } from "@angular/router";
 
-import { SlidesComponent } from "../../slides/slides.component";
+import { MatSidenav } from "@angular/material/sidenav";
 
 @Component({
   selector: 'aio-top-menu',
@@ -14,16 +12,7 @@ export class TopMenuComponent {
 
   @Input() parent: MatSidenav | undefined;
 
-  constructor(private router: Router,
-              public dialog: MatDialog) {}
-  openSlides() {
-    this.dialog.open(SlidesComponent, {
-      width: "1000px",
-      height: "600px",
-      enterAnimationDuration: '1500ms',
-      exitAnimationDuration:'0ms'
-    });
-  }
+  constructor(private router: Router) {}
 
   goAndCloseParent(path: string) {
     this.router.navigate([path]).then(() => {

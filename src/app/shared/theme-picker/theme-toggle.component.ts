@@ -1,5 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject } from '@angular/core';
+
 import { LocalStorage } from '../storage.service';
 
 export const storageKey = 'aio-theme';
@@ -18,7 +19,8 @@ export const storageKey = 'aio-theme';
 export class ThemeToggleComponent {
   isDark = false;
 
-  constructor(@Inject(DOCUMENT) private document: Document, @Inject(LocalStorage) private storage: Storage) {
+  constructor(@Inject(DOCUMENT) private document: Document,
+              @Inject(LocalStorage) private storage: Storage) {
     this.initializeThemeFromPreferences();
   }
 
@@ -57,7 +59,7 @@ export class ThemeToggleComponent {
   }
 
   getToggleLabel(): string {
-    return `Switch to ${this.isDark ? 'light' : 'dark'} mode`;
+    return `Switch to ${this.getThemeName()} mode`;
   }
 
   private updateRenderedTheme(): void {

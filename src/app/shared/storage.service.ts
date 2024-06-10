@@ -31,7 +31,7 @@ export class NoopStorage implements Storage {
   }
 }
 
-function getStorage(win: Window, storageType: 'localStorage' | 'sessionStorage'): Storage {
+export function getStorage(win: Window, storageType: 'localStorage' | 'sessionStorage'): Storage {
   // When cookies are disabled in the browser, even trying to access `window[storageType]` throws an
   // error. If so, return a no-op storage.
   try {

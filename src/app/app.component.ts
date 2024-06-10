@@ -1,21 +1,36 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import { Component, HostListener, ViewChild } from '@angular/core';
+import { CommonModule } from "@angular/common";
+import { ActivatedRoute, RouterModule } from '@angular/router';
 
-import { MatSidenav } from "@angular/material/sidenav";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
+import { MatSidenav, MatSidenavModule } from "@angular/material/sidenav";
+import { MatToolbarModule } from "@angular/material/toolbar";
 
 import { BehaviorSubject } from "rxjs";
 
 import { VersionInfo } from "./shared-types";
+import { LayoutModule } from "./layout/layout.module";
+import { SharedModule } from "./shared/shared.module";
+import { STORAGE_PROVIDERS } from "./shared/storage.service";
 
 export const showTopMenuWidth = 1150;
 export const dockSideNavWidth = 992;
+
 @Component({
   selector: 'app-root',
+  standalone: true,
+  imports: [
+    CommonModule, RouterModule,
+
+    MatButtonModule, MatToolbarModule, MatSidenavModule, MatIconModule,
+
+    LayoutModule, SharedModule
+  ],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  host: {'class': 'page-home'}
+  styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'moses-group';
 
   versionInfo: VersionInfo = {major: 0, full: "0.0.1"}
