@@ -4,8 +4,9 @@ import { Router } from "@angular/router";
 import { MatSidenav } from "@angular/material/sidenav";
 
 @Component({
-  selector: 'aio-top-menu',
-  templateUrl: './top-menu.component.html'
+    selector: 'aio-top-menu',
+    templateUrl: './top-menu.component.html',
+    standalone: false
 })
 export class TopMenuComponent {
   @Input() isWide = false;

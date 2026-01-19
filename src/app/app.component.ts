@@ -18,17 +18,14 @@ export const showTopMenuWidth = 1150;
 export const dockSideNavWidth = 992;
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [
-    CommonModule, RouterModule,
-
-    MatButtonModule, MatToolbarModule, MatSidenavModule, MatIconModule,
-
-    LayoutModule, SharedModule
-  ],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+    selector: 'app-root',
+    imports: [
+        CommonModule, RouterModule,
+        MatButtonModule, MatToolbarModule, MatSidenavModule, MatIconModule,
+        LayoutModule, SharedModule
+    ],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'moses-group';

@@ -6,8 +6,8 @@ import { LocalStorage } from '../storage.service';
 export const storageKey = 'aio-theme';
 
 @Component({
-  selector: 'aio-theme-toggle',
-  template: `
+    selector: 'aio-theme-toggle',
+    template: `
     <button mat-icon-button type="button" (click)="toggleTheme()"
             [title]="getToggleLabel()" [attr.aria-label]="getToggleLabel()">
       <mat-icon>
@@ -15,6 +15,7 @@ export const storageKey = 'aio-theme';
       </mat-icon>
     </button>
   `,
+    standalone: false
 })
 export class ThemeToggleComponent {
   isDark = false;
